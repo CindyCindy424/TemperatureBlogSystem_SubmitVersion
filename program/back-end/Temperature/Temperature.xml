@@ -1,0 +1,1987 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Temperature</name>
+    </assembly>
+    <members>
+        <member name="M:Temperature.Controllers.AccountController.Login(System.String,System.String)">
+             <summary>
+             登录
+             </summary>
+             <param name="nick_name">用户名</param>
+             <param name="password">密码</param>
+             <returns></returns>
+             <response code="200">成功</response>
+            <remarks>
+                 返回内容示例
+                 {
+                     userid = id,
+                     loginFlag = flag, 
+                     token = token,
+                     Msg = msg
+                 }
+                 
+                 flag：
+                 0：未执行
+                 1：成功
+                 2：密码错误
+                 3：用户名不存在
+                 
+             </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.nameCheck(System.String)">
+            <summary>
+            判断用户名是否被占用
+            </summary>
+            <param name="username">待注册名字</param>
+            <returns>
+                False: 已占用
+                True：未占用
+            </returns>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.register(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            注册
+            </summary>
+            <param name="nick_name"></param>
+            <param name="password"></param>
+            <param name="email"></param>
+            <param name="tel"></param>
+            <param name="wechat"></param>
+            <returns></returns>
+            <response code="200">注册成功</response>
+            <remarks>
+                返回内容：
+                {
+                    RegisterFlag = flag
+                }
+                
+                flag:
+                0: 未执行
+                1：注册成功
+                2：用户名已经被占用
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.checkPW(System.String,System.String)">
+            <summary>
+            检查密码正确性
+            </summary>
+            <param name="nick_name"></param>
+            <param name="password"></param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag=0; 未操作
+                
+                flag =1:成功
+                
+                    返回：{ Result = "true", Flag = flag }
+                    
+                flag = 2:没有找到该用户
+                
+                    返回：{ Flag = flag }
+                    
+                flag = 3：密码不正确
+                
+                    返回：{ Result = "false", Flag = flag }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.nameModify(System.String,System.String)">
+            <summary>
+            修改用户名
+            </summary>
+            <param name="oldName">原用户名</param>
+            <param name="newName">新用户名</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                 { ModifyFlag = flag }
+                 
+                 flag:
+                0:未修改
+                1：成功
+                2：没有找到该用户
+            </remarks>
+            
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.passwordModify(System.String,System.String,System.String)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="oldPW">旧密码</param>
+            <param name="newPW">新密码</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                { ModifyFlag = flag }
+                
+                flag:
+                0:未修改
+                1：成功
+                2：没有找到该用户
+                3：旧密码输入不正确
+            </remarks>
+            
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.personalInfo(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            维护个人信息（不含头像维护）
+            </summary>
+            <param name="nick_name"></param>
+            <param name="gender"></param>
+            <param name="location"></param>
+            <param name="year"></param>
+            <param name="month"></param>
+            <param name="day"></param>
+            <param name="email"></param>
+            <param name="tel"></param>
+            <param name="wechat"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                    Infoflag = flag
+                }
+                
+                flag:
+                0: 未执行
+                1：信息存储完成
+                2：没有找到该用户
+            
+            </remarks>
+            
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.createAvatorByName(Microsoft.AspNetCore.Http.IFormFileCollection,System.String)">
+            <summary>
+            上传头像( 注：修改了接口名字）
+            </summary>
+            <param name="uploadedPhoto">图片文件</param>
+            <param name="nick_name">用户名</param>
+            <response code="200">成功</response>
+            <returns></returns>
+            <remarks>
+                返回：
+                {uploadPaths = JsonConvert.SerializeObject(allFilePath), createPhotoFlag = createPhotoFlag}
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getAvatrResource(System.String)">
+            <summary>
+            返回头像,用户名错误/没设头像 返回默认头像
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns>图片</returns>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserInfoByNickName(System.String)">
+            <summary>
+            查询用户所有基本信息
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                
+                {
+                
+                    uploadFlag = flag,
+                    
+                    userAnnouncement = announcement,  //最新修改
+                    
+                    userInfo = user
+                    
+                }
+                
+                flag:
+                0: 未执行
+                1：成功
+                2：没有找到该用户
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserInfoByID(System.Int32)">
+            <summary>
+            查询用户所有基本信息 【BY ID】
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                
+                {
+                
+                    uploadFlag = flag,
+                    
+                    userAnnouncement = announcement,  //最新修改
+                    
+                    userInfo = user
+                    
+                }
+                
+                flag:
+                0: 未执行
+                1：成功
+                2：没有找到该用户
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.createAnnouncementByNickName(System.String,System.String)">
+            <summary>
+            添加/更新 公告内容
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="content">公告内容</param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                    Userid = id,
+                    CreateFlag = flag 
+                }
+            
+                flag:
+                0: 未执行
+                1：成功
+                2：没有找到该用户
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.deleteAnnouncementByNickName(System.String)">
+            <summary>
+            删除公告
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                
+                {
+                    DeleteFlag = flag
+                }
+                
+                flag:
+                
+                0: 未执行
+                1：成功
+                2：没有找到该用户
+                3：该用户没有创建过公告
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getAnnouncementByNickName(System.String)">
+            <summary>
+            获取用户公告内容
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                    GetFlag = flag,
+                    content = announcement
+                }
+            
+                flag:
+                0: 未执行
+                1：成功
+                2：没有找到该用户
+                3：该用户没有创建过公告
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.createFollowByNickNames(System.String,System.String)">
+            <summary>
+            创建关注关系
+            </summary>
+            <param name="nameOfBlogger">被关注者</param>
+            <param name="nameOfFans">关注者</param>
+            <returns></returns>
+            <remarks>
+                返回内容:
+                {
+                    CreateFlag = flag
+                }
+                
+                flag:
+                0: 未执行
+                1：成功
+                2：两个用户都不存在
+                3：博主用户不存在
+                4：粉丝用户不存在
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.deleteFollowByNickNames(System.String,System.String)">
+            <summary>
+            删除关注关系
+            </summary>
+            <param name="nameOfBlogger">被关注人</param>
+            <param name="nameOfFans">关注人（粉丝）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.createFollowByID(System.Int32,System.Int32)">
+            <summary>
+            创建关注关系BY ID
+            </summary>
+            <param name="nameOfBlogger">被关注者</param>
+            <param name="nameOfFans">关注者</param>
+            <returns></returns>
+            <remarks>
+                返回内容:
+                {
+                    CreateFlag = flag
+                }
+                
+                flag:
+                0: 未执行
+                1：成功
+                2：两个用户都不存在
+                3：博主用户不存在
+                4：粉丝用户不存在
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.deleteFollowByID(System.Int32,System.Int32)">
+            <summary>
+            删除关注关系 BY ID
+            </summary>
+            <param name="nameOfBlogger">被关注者</param>
+            <param name="nameOfFans">关注者</param>
+            <returns></returns>
+            <remarks>
+                返回消息内容:
+                {
+                    GetFlag = flag 
+                }
+                
+                flag：
+                0: 未执行
+                1：成功
+                2：两个用户都不存在
+                3：博主用户不存在
+                4：粉丝用户不存在
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getFansListByNickName(System.String)">
+            <summary>
+            返回粉丝列表
+            </summary>
+            <param name="nick_name">博主用户名</param>
+            <returns></returns>
+            <remarks>
+                返回内容:(成功时）
+                {
+                    returnFlag = flag,
+                    fansList = {Name,Avator}
+                }
+                
+                flag:
+                
+                0: 未执行
+                
+                1：成功
+                
+                    返回：{ returnFlag = flag, List = {Name,Avator} }
+                
+                2：用户寻找失败
+                
+                    返回：{ returnFlag = flag }
+                
+                3：该用户没有粉丝
+                
+                    返回：{ returnFlag = flag }
+                
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getFollowListByNickName(System.String)">
+            <summary>
+            返回关注的博主列表
+            </summary>
+            <param name="nick_name">博主用户名</param>
+            <returns></returns>
+            <remarks>
+                返回内容:
+                {
+                    returnFlag = flag, 
+                    FollowList =  {Name, Avator}
+                }
+                
+                flag:
+                
+                0: 未执行
+                
+                1：成功
+                
+                    返回：{returnFlag = flag, FollowList ={Name, Avator}}
+                
+                2：没有该用户
+                
+                    返回：{ returnFlag = flag }
+                
+                3：该用户关注的博主为空
+                
+                    返回：{ returnFlag = flag }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getFollowNum(System.String)">
+            <summary>
+            获取用户关注数 (该用户是“粉丝”身份）
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns>
+                flag:0   未操作
+                
+                flag:1   成功
+                
+                    返回：{ returnFlag = flag, FollowCnt = followCnt }
+                    
+                flag:2   没有该用户
+                
+                    返回：{ returnFlag = flag }
+                    
+            </returns>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getFanNum(System.String)">
+            <summary>
+            获取用户粉丝数 
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns>
+                flag:0   未操作
+                
+                flag:1   成功
+                
+                    返回：{ returnFlag = flag, FollowList = followCnt }
+                    
+                flag:2   没有该用户
+                
+                    返回：{ returnFlag = flag }
+                    
+            </returns>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserArticleNumByName(System.String)">
+            <summary>
+            获取用户总文章数 #1
+            </summary>
+            <param name="nick_name">用户名</param>
+            <returns>
+                flag:0   未操作
+                
+                flag:1   成功
+                
+                    返回：{ returnFlag = flag, Count = Cnt }
+                    
+                flag:2   没有该用户
+                
+                    返回：{ returnFlag = flag }
+                    
+            </returns>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserArticleNumByID(System.Int32)">
+            <summary>
+            返回用户总文章数量数 #2
+            </summary>
+            <param name="id">用户id</param>
+            <returns></returns>
+            <remarks>
+                flag:
+            
+                flag:0   未操作
+                
+                flag:1   成功
+                
+                    返回：{ returnFlag = flag, Count = Cnt }
+                    
+                flag:2   没有该用户
+                
+                    返回：{ returnFlag = flag }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getFamousUser">
+            <summary>
+            返回热度最高的10位博主【热度 = 文章浏览量+文章点赞】
+            </summary>
+            <returns></returns>
+            <remarks>
+            
+                返回：{ userID = u.UserId, userName = u.NickName, userAvator = u.Avatr }
+                
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserArticleReplyNum(System.Int32)">
+            <summary>
+            返回用户的文章总评论数
+            </summary>
+            <param name="id">用户id</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag:0 未操作
+                
+                flag：1 成功
+                    返回：{ Flag = flag, Count = cnt }
+                    
+                flag：2 没有该用户
+                
+                    返回：{ Flag = flag, errorMsg = msg }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserArticleLikesNum(System.Int32)">
+            <summary>
+            获取用户总点赞数
+            </summary>
+            <param name="id">用户id</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag:0 未操作
+                
+                flag：1 成功
+                    返回：{ Flag = flag, Count = cnt }    
+            
+                flag：2 没有该用户
+                
+                    返回：{ Flag = flag, errorMsg = msg }
+                
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.getUserLikesReplyArticleNum(System.Int32)">
+            <summary>
+            返回用户的文章总数、评论数、点赞数
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag:0 未操作
+                
+                flag：1 成功
+                    返回：{ Flag = flag, likesCnt = LikesCnt,replyCnt = ReplyCnt,articleCnt = ArticleCnt}    
+            
+                flag：2 没有该用户
+                
+                    返回：{ Flag = flag, errorMsg = msg }
+                
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.checkFollow(System.Int32,System.Int32)">
+            <summary>
+            检查当前用户是否关注某用户
+            </summary>
+            <param name="idOfCurrentUser">当前用户（“粉丝”角色）</param>
+            <param name="idOfCheckUser">检查对象（被关注）</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag：0 未操作
+                
+                    返回：{ result = "error", errorMsg = msg }
+                    
+                flag：1 且idOfCurrentUser关注了idOfCheckUser
+                
+                    返回：{ result = "True" }
+                    
+                flag：2 未关注
+                
+                    返回：{ result = "False" }
+                
+                
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.AccountController.checkFollowByName(System.String,System.String)">
+            <summary>
+            检查当前用户是否关注某用户【By name】
+            </summary>
+            <param name="nameOfCurrentUser">当前用户名</param>
+            <param name="nameOfCheckUser">需要验证的用户名</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag：0 未操作
+                
+                    返回：{ result = "error", errorMsg = msg }
+                    
+                flag：1 且idOfCurrentUser关注了idOfCheckUser
+                
+                    返回：{ result = "True" }
+                    
+                flag：2 未关注
+                
+                    返回：{ result = "False" }
+                    
+                flag：3 用户名不存在
+                
+                    返回：{Flag = flag, result = "User Not Found"}
+                
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.createArticleByNickName">
+            <summary>
+            创建文章
+            创建文章名为nick_name用户创建一篇题目为title内容为content的文章
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <param name="content"></param>
+            <param name="zoneid"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                        ReturnFlag = flag,
+                        UserName = nick_name, 
+                        Article_Name = title, 
+                        result = result
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：该用户已存在同名文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.createArticleCommentByNickName(System.String,System.String,System.String)">
+            <summary>
+            新增文章评论
+            名为nick_name用户为一篇题目为title的文章写评论，内容为content
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <param name="content"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                        ReturnFlag = flag,
+                        articleID = A_id,
+                        articlecomment = content
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getArticleInfoByTitle(System.String,System.String)">
+            <summary>
+            查看文章信息
+            名为nick_name用户查看一篇题目为title的文章
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                        ReturnFlag = flag, 
+                        INFO = info
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.deleteArticleByTitle(System.String,System.String)">
+            <summary>
+            删除文章
+            名为nick_name用户删除自己的题目为title的文章
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                       eturnFlag = flag,
+                       UserName = nick_name,
+                       ArticleName = title,
+                       result = "success!"
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Temperature.Controllers.ArticleController.deleteArticleCommentByID(System.String,System.Int32)" -->
+        <member name="M:Temperature.Controllers.ArticleController.getArticleCommentByTitle(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            查看文章评论，分页
+            名为nick_name用户查看一篇题目为title的文章的所有评论
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      Item = item //内容里user_id 修改为 Nick_Name
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.DeleteArticleVisitByTitle(System.String,System.String)">
+            <summary>
+            删除文章浏览记录
+            名为nick_name用户删除自己浏览题目为title的文章的记录
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag,
+                      result = "successful deleted"
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+                4：没有找到浏览记录
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getArticleVisitByTitle(System.String,System.String)">
+            <summary>
+            获取文章浏览记录
+            名为nick_name用户查看一篇题目为title的文章的所有浏览记录
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      Item = item
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getparentCRByID(System.Int32)">
+            <summary>
+            返回父评论信息
+            </summary>
+            <param name="parentid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getArticleRankByTitle(System.String,System.String)">
+            <summary>
+            获取文章浏览排行
+            名为nick_name用户查看一篇题目为title的文章的排行
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      Itme = item
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.updateArticleByTtile(System.String,System.String,System.String,System.String)">
+            <summary>
+            更新文章
+            名为nick_name用户更新一篇题目为title的文章的题目和内容
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <param name="newName"></param>
+            <param name="newContent"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      UserName = nick_name, 
+                      OldName = title, 
+                      NewName = newName,
+                      NewContent=newContent
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.addArticleLikeByTitle(System.String,System.String)">
+            <summary>
+            articlelikes加一 【修改后：每个user每篇文章只能点赞一次】
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      result = "successful"/"NOT FOUND" /"already Liked" 
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+                4：该用户已经对该篇文章点赞过  【新加】
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.addArticleCollectByTitle(System.String,System.String)">
+            <summary>
+            collectNum加1
+            </summary>
+            <param name="nick_name"></param>
+            <param name="title"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      result = "successful"
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该文章
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.updateArticleCommentByID(System.String,System.Int32,System.String)">
+            <summary>
+            更新评论
+            名为nick_name用户更新id为articlecrid的评论的内容
+            </summary>
+            <param name="nick_name"></param>
+            <param name="articlecrid"></param>
+            <param name="newContent"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag,
+                      UserName = nick_name, 
+                      crID=articlecrid,
+                      NewContent = newContent
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到该评论
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.createCommentCommentByID(System.String,System.Int32,System.String)">
+            <summary>
+            评论评论
+            名为nick_name用户评论id为articlecrid的评论
+            </summary>
+            <param name="nick_name"></param>
+            <param name="articlecommentID1"></param>
+            <param name="content"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                      ReturnFlag = flag, 
+                      aclid = articlecommentID1, 
+                      result = " NOT FOUND"
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：没有找到该用户
+                3：没找到要评论的评论
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getArticleByPage(System.Int32,System.Int32,System.String)">
+             <summary>
+             分页获取zone的article
+             </summary>
+             <param name="pageNum"></param>
+             <param name="pageSize"></param>
+             <param name="zoneID"></param>
+             <returns></returns>
+            <remarks>
+                 返回内容：
+                 {
+                      getFlag = getArticleFlag, 
+                      
+                       result = contentJson
+                 }
+                 
+                 flag:
+                 0：未操作
+                 1：成功
+             </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getpersonalArticlebypage(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            分页获取user的article
+            </summary>
+            <param name="pageNum"></param>
+            <param name="pageSize"></param>
+            <param name="userid"></param>
+            <returns></returns>
+            <remarks>
+                返回内容：
+                {
+                     getFlag = getFlag,        
+                      result = contentJson
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getotherArticlebypage(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            分页获取别人的article
+            </summary>
+            <param name="pageNum"></param>
+            <param name="pageSize"></param>
+            <param name="userId"></param>
+            <param name="authorid"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                     getFlag = getFlag,        
+                      result = contentJson
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getcommentNumbytitle(System.String)">
+            <summary>
+            得到文章评论数
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getArticlebyreadnum(System.Int32)">
+            <summary>
+            按阅读量获取文章
+            </summary>
+            <param name="takeArticleNum"></param>
+            <param name="userid"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                     getFlag = getFlag,        
+                      result = contentJson
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getNewestComment(System.Int32,System.String)">
+            <summary>
+            获取一个用户所有文章的最新评论
+            </summary>
+            <param name="takeCommentNum"></param>
+            <param name="nick_name"></param>
+            <returns></returns>
+             <remarks>
+                返回内容：
+                {
+                     flag = flag, 
+                     
+                    comment = content
+                }
+                
+                flag:
+                0：未操作
+                1：成功
+                2：找不到用户
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getRecommandedArticle(System.Int32,System.Int32)">
+            <summary>
+            分页返回所有文章——按照（浏览量+点赞量）从大到小的顺序
+            </summary>
+            <param name="pageNum">页号</param>
+            <param name="pageSize">一页大小</param>
+            <returns></returns>
+            <remarks>
+                flag:
+                0:未操作
+                1：成功
+                
+                返回：{Result = content,getArticleFlag = flag}
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getPersonalhottestArticle(System.Int32,System.Int32)">
+            <summary>
+            得到一个用户按照（浏览量+点赞量）前getarticleNum篇文章
+            </summary>
+            <param name="userid"></param>
+            <param name="getarticleNum"></param>
+            <returns></returns>
+            <remarks>
+                flag:
+                0:未操作
+                1：成功
+                
+                返回：{Result = content,flag = getArticleFlag}
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getPersonalnewestArticle(System.Int32,System.Int32)">
+            <summary>
+            得到一个用户按照上传时间前getarticleNum篇文章
+            </summary>
+            <param name="userid"></param>
+            <param name="getarticleNum"></param>
+            <returns></returns>
+            <remarks>
+                flag:
+                0:未操作
+                1：成功
+                
+                返回：{Result = content,flag = getArticleFlag}
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getnewestArticle(System.Int32)">
+            <summary>
+            得到最新上传的前getarticleNum篇文章
+            </summary>
+            <param name="getarticleNum"></param>
+            <returns></returns>
+            <remarks>
+                flag:
+                0:未操作
+                1：成功
+                
+                返回：{Result = content,flag = getArticleFlag}
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getSearchedArticle(System.String,System.Int32,System.Int32)">
+            <summary>
+            article关键字搜索
+            </summary>
+            <param name="searchContent"></param>
+            <returns></returns>
+            <remarks>
+                flag:
+                0:未操作
+                1：成功
+                
+                返回：{Result = content,flag = flag}
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ArticleController.getSearchedpersonalArticle(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            个人article关键字搜索
+            </summary>
+            <param name="searchContent"></param>
+            <param name="pageNum"></param>
+            <param name="pageSize"></param>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.createFolderByNickName(System.String,System.String)">
+             <summary>
+             新建收藏夹(禁止同一用户创建同名收藏夹）
+             </summary>
+             <param name="nick_name">用户名</param>
+             <param name="folderName">收藏夹名</param>
+             <returns></returns>
+            <remarks>
+                 返回信息：
+                 {
+                     ReturnFlag = flag,
+                     user = nick_name,
+                     folder = folderName
+                 }
+                 
+                 flag:
+                 
+                 0：未操作
+                 
+                 1：成功
+                 
+                 2：该用户已存在同名收藏夹
+             </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.addArticleByID(System.String,System.String,System.Int32)">
+            <summary>
+            向收藏夹中添加文章
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="folderName">文件夹名</param>
+            <param name="articleID">文章ID</param>
+            <returns></returns>
+            <remarks>
+                flag
+                
+                0：未操作
+                
+                1：成功
+                
+                    返回：{ReturnFlag = flag, folderID = F_id, articleId = articleID }
+                    
+                2：没找到该用户
+                
+                    返回：{ReturnFlag = flag, UserID = id, result = "NOT FOUND"}
+                    
+                3：没找到该文件夹
+                
+                    返回：{ReturnFlag = flag, folderID = F_id, result = "NOT FOUND" }
+                    
+                4：没有该文章
+                
+                    返回：{ ReturnFlag = flag, ArticleID = articleID, result = "Article NOT FOUND!"}
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.getFolderInfoByName(System.String,System.String)">
+            <summary>
+            获取收藏夹总览信息
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="folderName">收藏夹名</param>
+            <returns></returns>
+            <remarks>
+                flag
+                
+                0：未操作
+                
+                1：成功
+                
+                    返回：{ReturnFlag = flag, INFO = info }
+                    
+                2：没找到该用户
+                
+                    返回：{ReturnFlag = flag, UserName= nick_name, result = "NOT FOUND"}
+                    
+                3：没找到该文件夹
+                
+                    返回：{ReturnFlag = flag, FolderName=folderName, result = "NOT FOUND" }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.deleteFolderByName(System.String,System.String)">
+            <summary>
+            删除收藏夹
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="folderName">收藏夹名</param>
+            <returns></returns>
+            <remarks>
+                flag
+                
+                0：未操作
+                
+                1：成功
+                
+                    返回：{ReturnFlag = flag, UserName = nick_name, FolderName = folderName,result ="success!" }
+                    
+                2：没找到该用户
+                
+                    返回：{ReturnFlag = flag, UserName = nick_name,  result = "NOT FOUND"}
+                    
+                3：没找到该文件夹
+                
+                    返回：{ReturnFlag = flag, FolderName = folderName, result = "NOT FOUND" }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.updateFolderNameByName(System.String,System.String,System.String)">
+            <summary>
+            更新收藏夹名字
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="oldName">旧收藏夹名</param>
+            <param name="newName">新收藏夹名</param>
+            <returns></returns>
+            <remarks>
+            
+            
+                flag
+                
+                0：未操作
+                
+                1：成功
+                
+                    返回：{ReturnFlag = flag, UserName = nick_name, OldName = oldName, NewName = newName  }
+                    
+                2：没找到该用户
+                
+                    返回：{ReturnFlag = flag, UserName = nick_name, result = "NOT FOUND"}
+                    
+                3：没找到该文件夹
+                
+                    返回：{ReturnFlag = flag, folderName = oldName, result = "NOT FOUND" }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.deleteArticleByID(System.String,System.String,System.Int32)">
+            <summary>
+            删除收藏夹中的文章
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="folderName">收藏夹名</param>
+            <param name="articleID">文章ID</param>
+            <returns></returns>
+            <remarks>
+                flag
+                
+                0：未操作
+                
+                1：成功
+                
+                    返回：{ReturnFlag = flag, result = "successful deleted"}
+                    
+                2：没找到该用户
+                
+                    返回：{ ReturnFlag = flag,UserName = nick_name, result = "NOT FOUND" }
+                    
+                3：没找到该文件夹
+                
+                    返回：{ReturnFlag = flag, FolderName = folderName, result = "NOT FOUND" }
+                    
+                4：收藏夹里没有该文章
+                
+                    返回：{ReturnFlag = flag, folderID = F_id, ArticleID = articleID, result = "NOT FOUND"}
+                    
+                5：收藏夹为空
+                
+                    返回：{ReturnFlag = flag, result = "EMPTY FOLDER"}
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.getArticleListByName(System.String,System.String)">
+            <summary>
+            查看收藏夹内收藏文章(ID)
+            </summary>
+            <param name="nick_name">用户名</param>
+            <param name="folderName">收藏夹名</param>
+            <returns></returns>
+            <remarks>
+                flag 
+                
+                0：未操作
+                
+                1：成功
+                
+                    返回：{ ReturnFlag = flag, Item = item }
+                    
+                2：没找到该用户
+                
+                    返回：{ ReturnFlag = flag,UserName = nick_name, result = "NOT FOUND" }
+                    
+                3：没找到该文件夹
+                
+                    返回：{ReturnFlag = flag, FolderName = folderName, result = "NOT FOUND" }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.getFolderList(System.Int32)">
+            <summary>
+            获取用户收藏夹列表 （返回收藏夹id 收藏夹名和文章数）
+            </summary>
+            <param name="userID">用户ID</param>
+            <returns></returns>
+            <remarks>
+                 返回：
+                 
+                 flag：0 未操作/出错
+                 
+                     返回：{ Flag = flag, errorMsg = msg }
+                    
+                 flag：1 成功
+                 
+                     返回：{ Flag = flag, List = result }
+                     
+                 flag：2 该用户不存在
+                 
+                     返回：{ Flag = flag, errorMsg = "User Not Found" }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.FavouriteController.getFolderArticleInfo(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            返回收藏夹内文章的具体信息【分页】
+            </summary>
+            <param name="folderID">收藏夹id</param>
+            <param name="pageNum">页号</param>
+            <param name="pageSize">每页大小</param>
+            <returns></returns>
+            <remarks>
+                 返回：
+                 
+                 flag：0 未操作/出错
+                 
+                     返回：{ Flag = flag, errorMsg = msg }
+                    
+                 flag：1 成功
+                 
+                     返回：{ Flag = flag, Result = result }
+                     
+                 flag：2 该用户不存在
+                 
+                     返回：{ Flag = flag, errorMsg = "Folder Not Found" }
+                    
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.createAlbumByID(System.String,System.String,System.String)">
+            <summary>
+            新建相簿
+            </summary>
+            <param name="albumIntro"></param>
+            <param name="albumName"></param>
+            <param name="userID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法创建，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+             "createAlbumFlag": 1,
+             "albumID": "2"
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.createAlbumHistoryByID(System.String,System.String)">
+            <summary>
+            记录相簿访问
+            </summary>
+            <param name="albumID"></param>
+            <param name="userID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法新建记录，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            "createAlbumHistoryFlag": 1
+            失败：
+            "createAlbumHistoryFlag": 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.createPhotoByID(Microsoft.AspNetCore.Http.IFormFileCollection,System.String,System.String)">
+             <summary>
+             上传图片到指定相册 支持多文件上传
+             </summary>
+             <param name="uploadedPhoto"></param>
+             <param name="albumID"></param>
+             <param name="userID"></param>
+             <response code="200">成功</response>
+             <response code="403">无法新建图片，出现错误/异常</response>
+             <returns></returns>
+             <remarks>
+             return {
+             成功：
+             "Flag": 1
+            "uploadPaths": "[\"BlogPics/albums\5\6\13302d1d-9371-40c5-8f88-5336a4706d17_background03.jpg\"]", //静态资源路径
+            "coorespondingPhotoIDs": "[\"2\"]", //上传图片所获得的photoID 按照上传顺序排列
+            
+             失败：
+             "Flag": 0
+             }
+             </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.createPhotoCommentByID(System.String,System.String,System.String)">
+            <summary>
+            评论图片
+            </summary>
+            <param name="content"></param>
+            <param name="photoID"></param>
+            <param name="userID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法评论图片，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            "Flag": 1
+            "photoCommentByID": "1", 、图片评论id
+            
+            失败：
+            "Flag": 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.deleteAlbumByID(System.String,System.String)">
+            <summary>
+            删除相册本地内容以及数据库记录
+            </summary>
+            <param name="albumID"></param>
+            <param name="userID"></param>
+            <response code="200">成功</response>
+            <returns></returns>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.deleteAlbumHistoryByID(System.String,System.String)">
+            <summary>
+            删除相册访问历史记录
+            </summary>
+            <param name="albumID"></param>
+            <param name="userID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法删除历史，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.deletePhotoByID(System.String)">
+            <summary>
+            删除某一张图片
+            </summary>
+            <param name="photoID"></param>
+            <response code="200">成功</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.deletePhotoCommentByID(System.String)">
+            <summary>
+            刪除图片评论
+            </summary>
+            <param name="commentID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法删除，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.getAlbumHistryByID(System.String)">
+            <summary>
+            获取相簿浏览历史信息
+            </summary>
+            <param name="albumID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "albumVisits": "[{\"visitor\":\"www\",\"visitTime\":\"2020/9/9 11:38:01\"}]",
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.getAllAlbumByPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取所有相簿
+            </summary>
+            <param name="userID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "albums": "[{\"AlbumId\":1,\"AlbumIntroduction\":\"1\",\"AlbumName\":\"22\",\"AlbumTime\":\"2020-09-07T16:12:53\",\"UserId\":3,\"User\":null,\"AlbumVisit\":[],\"Photo\":[]},
+            {\"AlbumId\":2,\"AlbumIntroduction\":\"new album\",\"AlbumName\":\"hello album\",\"AlbumTime\":\"2020-09-09T11:36:01\",\"UserId\":3,\"User\":null,\"AlbumVisit\":[],\"Photo\":[]}]",
+            {......}
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.getAllPhotoByPage(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            获取相簿内所有图片
+            </summary>
+            <param name="albumID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "photos": "[{\"PhotoId\":2,\"AlbumId\":2,\"PhotoLikes\":0,\"VisitNum\":0,\"PhotoAddress\":\"albums\3\2\413127ac-77f4-474f-8b3f-8561dc7c5d21_矢量日本特色文化集合元素.png\",\"PhotoUploadTime\":\"2020-09-09T11:41:36\",\"UserId\":3,\"Album\":null,\"User\":null,\"PhotoComment\":[],\"PhotoVisit\":[]},
+            {......}]",
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.getPhotoDetail(System.String)">
+             <summary>
+             返回图片详情
+             </summary>
+             <param name="photoID"></param>
+             <returns></returns>
+             <remarks>{
+              "photoDetail": {
+                "photoID": 16,
+                "albumID": 13,
+                "photoLikes": 16,
+                "visitNum": 0,
+                "photoUploadTime": "2020-08-31T09:58:07",
+                "userID": 1,
+                "userName": "a",
+                "avatar": null,
+                "commentNums": 3
+              },
+              "flag": 1
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.increasePhotoVisit(System.String)">
+            <summary>
+            某图片的访问次数加1
+            </summary>
+            <param name="photoID"></param>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "photo": {\"PhotoId\":2,\"AlbumId\":2,\"PhotoLikes\":0,\"VisitNum\":0,\"PhotoAddress\":\"albums\3\2\413127ac-77f4-474f-8b3f-8561dc7c5d21_矢量日本特色文化集合元素.png\",\"PhotoUploadTime\":\"2020-09-09T11:41:36\",\"UserId\":3,\"Album\":null,\"User\":null,\"PhotoComment\":[],\"PhotoVisit\":[]}
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.getPhotoCommentByID(System.String)">
+            <summary>
+            获取图片评论
+            </summary>
+            <param name="photoID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "photoComments": "[{\"PhotoCommentId\":1,\"PhotoCommentContent\":\"这张图片真好看\",\"PhotoId\":2,\"UserId\":3,\"PhotoCommentTime\":\"2020-09-09T11:46:37\",\"Photo\":null,\"User\":null}]",
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.getPhotoHistoryByID(System.String)">
+            <summary>
+            获取图片浏览历史
+            </summary>
+            <param name="photoID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "photoVisits": "[]",
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.setPhotoLike(System.String,System.String)">
+            <summary>
+            图片点赞量更新
+            </summary>
+            <param name="photoID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法更新点赞，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+            成功：
+            flag = 1
+            "photoID": "2",
+            "photoLikes": 1, //点赞数量
+            
+            失败：
+            flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.PhotoController.checkPhotoLike(System.String,System.String)">
+            <summary>
+            返回用户是否点赞
+            1为已点赞 2为未点赞
+            </summary>
+            <param name="photoID"></param>
+            <param name="userID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.createTopicByID">
+            <summary>
+            创建话题
+            </summary>
+            <param name="content"></param>
+            <param name="title"></param>
+            <param name="userID"></param>
+            <param name="zoneID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法创建</response>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.createTopicAnswerByID">
+            <summary>
+            创建话题回复
+            </summary>
+            <param name="content"></param>
+            <param name="topicID"></param>
+            <param name="userID"></param>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.deleteTopicAnswerByID(System.String)">
+            <summary>
+            根据ID删除话题评论
+            </summary>
+            <param name="answerID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法删除，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.deleteTopicByID(System.String)">
+            <summary>
+            根据用户ID删除相应用户
+            </summary>
+            <param name="topicID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法删除，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+                    topicID : topidID
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getTopicByPage(System.Int32,System.Int32,System.String)">
+            <summary>
+            分页获取topic
+            </summary>
+            <param name="pageNum">页号</param>
+            <param name="pageSize">每页大小</param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              Result : [
+                {topicID:, topicContent:, answerNum:, userID:, topicUpdateTime:, zoneID:},
+                {......}
+            ]
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getMyTopicByPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页获取userID代表的用户创建的topic
+            </summary>
+            <param name="userID">用户ID</param>
+            <param name="pageNum">页号</param>
+            <param name="pageSize">每页大小</param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              Result : [
+                {topicID:, topicContent:, answerNum:, userID:, topicUpdateTime:, zoneID:},
+                {......}
+            ]
+              失败：flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getTopicCommentByID(System.String)">
+            <summary>
+            获取topicID话题下的评论
+            </summary>
+            <param name="topicID"></param>
+            <response code="200">成功</response>
+            <response code="403">无法获取，出现错误/异常</response>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              Result:{
+                  {topicAnswerID:, topicID:, answerLikes:, answerContent:, userID:, answerUploadTime:, parentAnswerID:}
+            }
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getTopicNumberByZoneID(System.String)">
+            <summary>
+            根据zoneID返回topic总共的数量
+            </summary>
+            <param name="zoneID"></param>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              totalNumber: ,
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getNewestTopic(System.Int32)">
+            <summary>
+            获取最新发布的topic
+            </summary>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              topics:{
+                  {topicAnswerID:, topicID:, answerLikes:, answerContent:, userID:, answerUploadTime:, parentAnswerID:}
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getHotestTopic(System.Int32)">
+            <summary>
+            获取最热的topic
+            </summary>
+            <param name="takeTopicNum"></param>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              topics:{
+                  {topicAnswerID:, topicID:, answerLikes:, answerContent:, userID:, answerUploadTime:, parentAnswerID:}
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getTopicDetailByID(System.String)">
+            <summary>
+            获取相应topicID的内容、评论、评论者信息
+            </summary>
+            <param name="topicID"></param>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1
+              answerUserList: [
+              {"topicInfo":"{"TopicAnswerID":1,"TopicID":3,"AnswerLikes":2,"Content":"hello","UserID":3,"UploadTime":"2020-09-09T11:28:07","ParentAnswerID":-1}","userComments":[]},
+              {......},
+                ],
+              失败：flag = 2
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getUserTopicNum(System.String)">
+            <summary>
+            返回用户发表的所有话题数量
+            </summary>
+            <param name="userID"></param>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1,
+              topicCount = 1,
+              
+              失败：flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getAnswerNumOfUser(System.String)">
+            <summary>
+            返回用户获得的所有回答数量
+            </summary>
+            <param name="userID"></param>
+            <returns></returns>
+            <remarks>
+            return {
+              成功：flag = 1,
+              userTopicAnswerCount = 1,
+              
+              失败：flag = 0
+            }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getSingleTopicDetail(System.String)">
+             <summary>
+             返回某个topic的详情信息
+             </summary>
+             <param name="topicID"></param>
+             <returns></returns>
+             <remarks>
+             {
+                "topicDetail": {
+                    "topicId": 2,
+                    "topicContent": "222222222222222222222222",
+                    "answerNum": 5,
+                    "userId": 2,
+                    "topicUploadTime": "2020-08-26T14:34:00",
+                    "zoneId": 3,
+                    "topicTitle": null,
+                    "user": null,
+                    "zone": null,
+                    "topicAnswerReply": [],
+                    "topicRank": []
+                },
+                "flag": 1
+            }
+             </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.TopicController.getSearchedTopic(System.String,System.Int32,System.Int32)">
+             <summary>
+             topicId关键字搜索
+             </summary>
+             <param name="searchContent"></param>
+             <returns></returns>
+             <remarks>
+            {
+              "topicDetail": [
+                {
+                  "topicTitle": "发过很多345附加复合弓",
+                  "topicId": 2,
+                  "topicContent": "22222222topic32222222222222222",
+                  "answerNum": 6,
+                  "userId": 2,
+                  "topicUploadTime": "2020-08-26T14:34:00",
+                  "zoneId": 3,
+                  "zoneName": "dfd"
+                },
+                {
+                  "topicTitle": "发过很多345附加复合弓",
+                  "topicId": 7,
+                  "topicContent": "1",
+                  "answerNum": 0,
+                  "userId": 2,
+                  "topicUploadTime": "2020-08-26T14:59:17",
+                  "zoneId": 3,
+                  "zoneName": "dfd"
+                }
+              ],
+              "flag": 1
+            }
+             </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ZoneController.getZoneName(System.Int32)">
+            <summary>
+            返回分区名
+            </summary>
+            <param name="zoneID">分区id</param>
+            <returns></returns>
+            <remarks>
+                返回：
+                
+                flag：0 未操作
+                
+                flag：1 成功
+                
+                    返回：{ Flag = returnFlag, zoneName = name }
+                    
+                flag：2 不存在该分区
+                
+                    返回：{ Flag = returnFlag, errorMsg = msg }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ZoneController.getArticleRatio">
+            <summary>
+            获取各分区文章数量
+            </summary>
+            <returns></returns>
+            <remarks>
+                返回：
+                    { u.ZoneId, u.ZoneName, u.ZoneArticleNum }
+            </remarks>
+        </member>
+        <member name="M:Temperature.Controllers.ZoneController.getTopicRatio">
+            <summary>
+            获取各分区话题数量
+            </summary>
+            <returns></returns>
+            <remarks>
+                返回：
+                    { u.ZoneId, u.ZoneName, u.ZoneTopicNum }
+            </remarks>
+        </member>
+    </members>
+</doc>
